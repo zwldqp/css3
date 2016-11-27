@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*阻止元素塌陷(子元素浮动，父元素高度为0)，并且不用浮动父元素*/
+        /*.clearfix::after{*/
+            /*content: "";*/
+            /*display: block;*/
+            /*clear: both;*/
+        /*}*/
+        /*/!*ie的兼容性*!/*/
+        /*.clearfix{*/
+            /*overflow: auto;*/
+            /*zoom: 1;*/
+        /*}*/
+        /*.a{*/
+            /*float: left;*/
+        /*}*/
+        /*/!*三角形*!/*/
+        /*#div1{*/
+            /*width: 0;*/
+            /*height: 0;*/
+            /*border-style: solid;*/
+            /*border-top-color: transparent;*/
+            /*border-left-color: transparent;*/
+            /*border-right-color: #0ff;*/
+            /*border-bottom-color: transparent;*/
+            /*/!*三边透明色  就剩一个三角形了*!/*/
+        /*}*/
+        /*圆形*/
+        /*#div2{*/
+            /*height: 200px;*/
+            /*width: 200px;*/
+            /*background: #f00;*/
+            /*/!*方块圆角的半径 大到边的一半的时候就变成圆了*!/*/
+            /*border-radius: 70%;*/
+        /*}*/
+        .cir,.cir::after{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border-width: 10px;
+            border-style: solid;
+            position: absolute;
+
+        }
+        .cir::after{
+            content: "";
+            left: -10px;
+            top: -10px;
+
+        }
+        .a{
+            border-color: blue;
+            top: 0;
+            left: 0;
+        }
+        .a.cir::after{
+            border-color: blue;
+            z-index: 1;
+            border-bottom-color: transparent;
+        }
+        .b{
+            border-color: black;
+            left: 230px;
+            top: 0;
+        }
+        .b.cir::after{
+            border-color: black;
+            z-index: 1;
+            border-left-color: transparent;
+        }
+        .c{
+            border-color: red;
+            left: 460px;
+            top: 0;
+        }
+        .c.cir::after{
+            border-color: red;
+            z-index: 2;
+            border-left-color: transparent;
+        }
+        .d{
+            border-color: yellow;
+            left: 100px;
+            top: 110px;
+        }
+        .d.cir::after{
+            border-color: yellow;
+        }
+        .e{
+            border-color: green;
+            top: 110px;
+            left: 340px;
+        }
+        .e.cir::after{
+            border-color: green;
+            z-index: 1;
+            border-top-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!--选择器：+表示兄弟-->
+    <!--#div1+div{-->
+    <!--表示div2的属性-->
+    <!--只向下选取一个兄弟-->
+    <!--}-->
+    <!--#div2~div{-->
+    <!--表示下面的所有兄弟-->
+    <!--}-->
+    <!--<form action="" name="">-->
+        <!--<input type="text"name="name1"/>-->
+    <!--</form>-->
+    <div id="div1" class="cir a"></div>
+    <div id="div2" class="cir b"></div>
+    <div id="div3" class="cir c"></div>
+    <div id="div4" class="cir d"></div>
+    <div id="div5" class="cir e"></div>
+
+    <!--<ul id="ul1" class="clearfix">-->
+        <!--<li class="a">1</li>-->
+        <!--<li class="a">2</li>-->
+        <!--<li class="a">3</li>-->
+        <!--<li class="a">4</li>-->
+    <!--</ul>-->
+</body>
+</html>
