@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*图片只设置宽度 整体会等比例变换*/
+        /*#div1{*/
+            /*background-image: url(),url(); 可用多个背景图片*/
+            /*background-position: 0 0,300px 300px;  用定位确定每个图片位置  左上角坐标*/
+            /*background: url(img.jpg);*/
+        /*背景图片默认从padding开始   改成从border*/
+            /*background-origin: border-box;*/
+            /*从padding开始外面被裁掉*/
+            /*background-clip: padding-box;*/
+            /*字是透明的   透出来后面的背景  背景样子的字体*/
+            /*color: transparent;*/
+            /*-webkit-background-clip: text;*/
+            /*-webkit-background-size: cover; 图片大小全覆盖  但不保证全都能看见  比如高正好 宽出去了*/
+            /*background-size: contain;  保证所有的都能看见  但是不保证全覆盖  比如宽正好  高不够*/
+            /*word-wrap: break-word; 自动适应div宽度字体换行  但是英文会有问题 单词分开*/
+
+        /*}*/
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            ;list-style: none;
+        }
+        #clock{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            margin:100px auto;
+            position: relative;
+        }
+        #dial li{
+            width: 2px;
+            height: 6px;
+            background: #000000;
+            position: absolute;
+            left: 100px;
+            transform-origin:0 100px;
+        }
+        #dial li:nth-child(5n+1){
+            height: 10px;
+        }
+        #hour{
+            width: 4px;
+            height: 40px;
+            background: #000000;
+            position: absolute;
+            left: 98px;
+            top: 60px;
+            transform-origin: bottom;
+        }
+        #minu{
+            width: 4px;
+            height: 60px;
+            background: #0f0;
+            position: absolute;
+            left: 98px;
+            top: 40px;
+            transform-origin: bottom;
+        }
+        #second{
+            width: 4px;
+            height: 80px;
+            background: #f00;
+            position: absolute;
+            left: 98px;
+            top: 20px;
+            transform-origin: bottom;
+        }
+    </style>
+</head>
+<body>
+<div id="clock">
+    <ul id="dial"></ul>
+    <div id="hour"></div>
+    <div id="minu"></div>
+    <div id="second"></div>
+</div>
+<script>
+    var oDial=document.getElementById('dial');
+    var html="";
+    var oHour=document.getElementById('hour');
+    var oMuni=document.getElementById('minu');
+    var oSecond=document.getElementById('second');
+    for(var i=0;i<60;i++){
+        html+="<li style='transform:rotate("+6*i+"deg)'></li>";
+    }
+    oDial.innerHTML=html;
+    setInterval(function () {
+        var now = new  Date(),
+                second = now.getSeconds(),
+                minute = now.getMinutes()+second/60,
+                hour=now.getHours()+minute/60;
+        oHour.style.transform="rotate("+hour*30+"deg)";
+        oMuni.style.transform="rotate("+minute*6+"deg)";
+        oSecond.style.transform="rotate("+second*6+"deg)";
+    },1000);
+</script>
+<script>
+    /**
+     * 盒模型
+     * var oDiv  (w200 h200 padding10px bg#f00 border10px)  offsetWidth包括padding border
+     * 盒模型包括w3c标准盒模型（宽高只有内容的）和怪异（传统）盒模型（宽高包括内容 border padding）
+     *父元素必须定义display：box；display：inline-box；display：inline；
+     * 子元素才能分配
+     * -webkit-box-flex：1  占总的的一份  只能整数
+     * 如果有一个是定值  其他按比例
+     * -webkit-box-flex：10px；
+     * -webkit-box-flex：1；  剩余的1/3
+     * -webkit-box-flex：2；  剩余的2/3
+     * 如果加margin
+     * 如果父元素加 -webkit-box-orient：vertical；  子元素水平分布
+     * -webkit-box-pack   水平方向对齐
+     * -webkit-box-align  竖直方向对齐
+     *
+     *
+     * 过度，2D/3D变换和动画
+     *<div id="div1">
+     * <div id="div2">div</div>
+    * </div>
+     * div1{w200 h200 border 2px dashes #000 margin 100px auto}
+     * div2{w200 h200  bg#f00 transform:rotate(30deg)      旋转  正的向下转 transform-origin:50% 50%    围绕中心点转
+     * transform：translate（100px，20px）  移动 水平，竖直}   deg角度
+     */
+
+</script>
+
+
+</body>
+</html>
