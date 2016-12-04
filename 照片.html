@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background: #eeeeee;
+        }
+        #container{
+            width: 480px;
+            height: 320px;
+            margin: 100px auto
+        ;
+        }
+        #container img{
+            width: 480px;
+            height: 320px;
+            border: 5px solid #ffffff;
+            box-shadow: 5px 5px 5px 5px rgba(50,50,50,0.4);
+            position: absolute;
+            transition: all 2s ease;
+        }
+        #container img:first-child{
+            transform: rotate(20deg);
+        }
+        #container img:last-child{
+            transform: rotate(-20deg);
+        }
+        #container img:hover{
+            z-index: 1;
+            transform: scale(1.2);
+            box-shadow:10px 10px 10px 10px rgba(50,50,50,0.4) ;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="img/7.jpg" alt=""/>
+        <img src="img/5.jpg" alt=""/>
+    </div>
+
+</body>
+</html>
