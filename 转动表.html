@@ -18,11 +18,12 @@
             border: 1px solid #000;
             margin:100px auto;
             position: relative;
+            background: url("img/5.jpg") no-repeat;
         }
         #dial li{
             width: 2px;
             height: 6px;
-            background: #000000;
+            background: #fff;
             position: absolute;
             left: 100px;
             transform-origin:0 100px;
@@ -33,13 +34,12 @@
         #hour{
             width: 4px;
             height: 40px;
-            background: #000000;
+            background: #0ff;
             position: absolute;
             left: 98px;
             top: 60px;
             transform-origin: bottom;
-            animation:rotate 216000s linear infinite;
-
+            transition: all 1s linear 0s;
         }
         #minu{
             width: 4px;
@@ -49,9 +49,9 @@
             left: 98px;
             top: 40px;
             transform-origin: bottom;
-            animation:rotate 3600s linear infinite;
+            transition: all 1s linear 0s;
         }
-        #second{
+        #second {
             width: 4px;
             height: 80px;
             background: #f00;
@@ -59,16 +59,9 @@
             left: 98px;
             top: 20px;
             transform-origin: bottom;
-            animation:rotate 60s linear infinite;
-
+            transition: all 1s linear 0s;
         }
-        @keyframes rotate {
-            from{
 
-            }to{
-                    transform: rotate(360deg);
-                         }
-        }
     </style>
 </head>
 <body>
@@ -91,13 +84,34 @@
         }
         oDial.innerHTML=x;
 
-                    var date = new Date(),
-                            second=date.getSeconds(),
-                            minu=date.getMinutes()+second/60,
-                            hour=date.getHours()+minu/60;
-                    oHour.style.transform="rotate("+hour*30+"deg)";
-                    oMinu.style.transform="rotate("+minu*6+"deg)";
-                    oSecond.style.transform="rotate("+second*6+"deg)";
+        function run(){
+            var date = new Date(),
+                    second=date.getSeconds(),
+                    minu=date.getMinutes()+second/60,
+                    hour=date.getHours()+minu/60;
+            oHour.style.transform="rotate("+hour*30+"deg)";
+            oMinu.style.transform="rotate("+minu*6+"deg)";
+            oSecond.style.transform="rotate("+second*6+"deg)";
+        }
+        run();
+        var h=0;
+        var m=0;
+        var s=0;
+        setInterval(function(){
+            var date = new Date(),
+                    second=date.getSeconds(),
+                    minu=date.getMinutes()+second/60,
+                    hour=date.getHours()+minu/60;
+            if(!second) ++s;
+            if(!minu) ++m;
+            if(!hour) ++h;
+            var A=s*360+second*6;
+            var B=m*360+minu*6;
+            var C=h*360+hour*30;
+            oHour.style.transform="rotate("+C+"deg)";
+            oMinu.style.transform="rotate("+B+"deg)";
+            oSecond.style.transform="rotate("+A+"deg)";
+        },1000);
 
     </script>
 </body>
