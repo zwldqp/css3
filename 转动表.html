@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+        ;list-style: none;
+        }
+        #clock{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            margin:100px auto;
+            position: relative;
+        }
+        #dial li{
+            width: 2px;
+            height: 6px;
+            background: #000000;
+            position: absolute;
+            left: 100px;
+            transform-origin:0 100px;
+        }
+        #dial li:nth-child(5n+1){
+            height: 10px;
+        }
+        #hour{
+            width: 4px;
+            height: 40px;
+            background: #000000;
+            position: absolute;
+            left: 98px;
+            top: 60px;
+            transform-origin: bottom;
+            animation:rotate 216000s linear infinite;
+
+        }
+        #minu{
+            width: 4px;
+            height: 60px;
+            background: #0f0;
+            position: absolute;
+            left: 98px;
+            top: 40px;
+            transform-origin: bottom;
+            animation:rotate 3600s linear infinite;
+        }
+        #second{
+            width: 4px;
+            height: 80px;
+            background: #f00;
+            position: absolute;
+            left: 98px;
+            top: 20px;
+            transform-origin: bottom;
+            animation:rotate 60s linear infinite;
+
+        }
+        @keyframes rotate {
+            from{
+
+            }to{
+                    transform: rotate(360deg);
+                         }
+        }
+    </style>
+</head>
+<body>
+    <div id="clock">
+        <ul id="dial"></ul>
+        <div id="hour"></div>
+        <div id="minu"></div>
+        <div id="second"></div>
+    </div>
+    <script src="jslib.js"></script>
+    <script>
+        var oClock=document.getElementById('clock');
+        var oDial=document.getElementById('dial');
+        var oHour=document.getElementById('hour');
+        var oMinu=document.getElementById('minu');
+        var oSecond=document.getElementById('second');
+        var x='';
+        for(var i=0;i<60;i++){
+            x+="<li style='transform: rotate("+6*i+"deg)'></li>";
+        }
+        oDial.innerHTML=x;
+
+                    var date = new Date(),
+                            second=date.getSeconds(),
+                            minu=date.getMinutes()+second/60,
+                            hour=date.getHours()+minu/60;
+                    oHour.style.transform="rotate("+hour*30+"deg)";
+                    oMinu.style.transform="rotate("+minu*6+"deg)";
+                    oSecond.style.transform="rotate("+second*6+"deg)";
+
+    </script>
+</body>
+</html>
