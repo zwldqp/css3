@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container{
+            width: 600px;
+            height: 400px;
+            margin: 100px auto;
+            position: relative;
+        }
+        #imgs img{
+            width: 600px;
+            height: 400px;
+            position: absolute;
+            transform-origin: bottom;
+            opacity: 0;
+            /*transform: rotateX(180deg);*/
+            /*transition: all 1s ease;*/
+        }
+        #imgs{
+            perspective: 1000px;
+        }
+        #arrows span{
+            width: 50px;
+            height: 50px;
+            background: #cccccc;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            font-size: 60px;
+            text-align: center;
+            line-height: 50px;
+            box-shadow: 10px 10px 10px 10px rgba(0,0,0,.5);
+            color: white;
+            -webkit-text-stroke:2px #000;
+            -moz-text-stroke:2px #000;
+            -webkit-text-stroke:2px #000;
+            -ms-text-stroke:2px #000;
+            -o-text-stroke:2px #000;
+            text-stroke:2px #000;
+
+        }
+        #prev{
+            left: -100px;
+        }
+        #next{
+            right: -100px;
+        }
+        #imgs .show{
+            animation: show 1s ease forwards;
+        }
+        #imgs .hide{
+            animation: hide .5s ease;
+        }
+        @keyframes show {
+            from{
+                transform: rotateX(180deg);
+            }to{
+            opacity: 1;
+            transform: rotateX(0deg);
+                         }
+        }
+        @keyframes hide {
+            from{
+                opacity: 1;
+                transform: rotateX(0deg);
+            }to{
+            opacity: 0;
+            transform: rotateX(-180deg);
+             }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="imgs">
+            <img src="img/11.jpg" alt="" style="z-index: 4" class="show"/>
+            <img src="img/22.jpg" alt="" style="z-index: 3"/>
+            <img src="img/55.jpg" alt="" style="z-index: 2"/>
+            <img src="img/44.jpg" alt="" style="z-index: 1"/>
+        </div>
+        <div id="arrows">
+            <span id="prev">&lt;</span>
+            <span id="next">&gt;</span>
+        </div>
+    </div>
+    <script>
+        var oPrev=document.getElementById('prev');
+        var oNext=document.getElementById('next');
+        var oImg=document.getElementById('imgs');
+        var aImg=oImg.getElementsByTagName('img');
+        var inow=0;
+        oPrev.onclick=oNext.onclick=function(){
+            if(this==oNext){
+                aImg[inow].className='hide';
+                inow++;
+                if(inow==aImg.length){
+                    inow=0;
+                }
+                aImg[inow].className='show';
+            }else{
+                aImg[inow].className='hide';
+                inow--;
+                if(inow==-1){
+                    inow=aImg.length-1;
+                }
+            }
+            aImg[inow].className='show';
+        }
+    </script>
+</body>
+</html>
