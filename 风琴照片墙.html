@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!--注释掉的是用弹性盒模型  但是相邻的转化有弊端-->
+    
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #container{
+            width: 700px;
+            height: 400px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #imgs{
+            width: 700px;
+            height: 400px;
+            position: relative;
+            /*overflow: hidden;*/
+            display: -webkit-flex;
+        }
+        #imgs div{
+            /*width: 500px;*/
+            width: 140px;
+            height: 400px;
+            position: relative;
+            transition: all 1s ease;
+            /*-webkit-flex-basis: 20%;*/
+            /*overflow: hidden;*/
+        }
+        #imgs img{
+            width: 500px;
+            height: 400px;
+        }
+        #container:hover div{
+            width: 50px;
+        }
+        #imgs div:hover {
+            /*z-index: 10;*/
+            /*transition: all 1s ease;*/
+            /*-webkit-flex-basis: 200%;*/
+            width: 500px;
+        }
+        .img-div{
+            width: 600px;
+            position: absolute;
+            opacity: 0.5;
+            background: #000000;
+            color: white;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="imgs">
+            <div id="imgs1">
+                <img src="img/11.jpg" id="img1" style="z-index: 1" alt=""/>
+                <span class="img-div a">描述1</span>
+            </div>
+            <div id="imgs2">
+                <img src="img/22.jpg" id="img2"  style="z-index:2" alt=""/>
+                <span class="img-div b">描述2</span>
+            </div>
+            <div id="imgs3">
+                <img src="img/44.jpg" id="img3"  style="z-index: 3" alt=""/>
+                <span class="img-div c">描述3</span>
+            </div>
+            <div id="imgs4">
+                <img src="img/55.jpg" id="img4"  style="z-index: 4" alt=""/>
+                <span class="img-div d">描述4</span>
+            </div>
+            <div id="imgs5">
+                <img src="img/33.jpg" id="img5" style="z-index: 5" alt=""/>
+                <span class="img-div e">描述5</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
