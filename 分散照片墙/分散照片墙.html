@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            background: url("img/bg.jpg");
+            width: 100%;
+            height: 100%;
+        }
+        #container .img{
+            height: 125px;
+            width: 125px;
+            border: 5px solid #ffffff;
+            box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+            position: absolute;
+            top: -500px;
+            left: -500px;
+            transition: all 1s ease-in-out;
+        }
+        #container span{
+            display: block;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: all 1s ease-in-out;
+        }
+        #next,#prev{
+            width: 75px;
+            height: 75px;
+            position: absolute;
+            top: 200px;
+            background-repeat: no-repeat;
+            background-size: 75px 75px;
+        }
+        #prev{
+            left: 10px;
+        }
+        #next{
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <span id="prev"></span>
+    <span id="next"></span>
+    <script>
+        (function(){
+            var ROW = 4,COL = 6,NUM=ROW*COL;
+                    //ThumbWidth=125,ThumbHight=125;
+            var count=0;
+            var BigimgW=750,BigimgH=400;
+            var oContainer=document.getElementById('container');
+            for(var i=0; i<NUM;i++){
+                    var oThumbImg = new Image();
+                    oThumbImg.onload=function(){
+                        count++;
+                        if(count==NUM*2){
+                            loadSuccess();
+                        }
+                    }
+                    oThumbImg.src="img/thumbs/"+ (i+1)+".jpg";
+
+                    var oBigImg = new Image();
+                    oBigImg.onload=function(){
+                        count++;
+                        if(count==NUM*2){
+                            loadSuccess();
+                        }
+                    }
+                    oBigImg.src="img/"+(i+1)+".jpg";
+
+                }
+
+
+            var timer;
+            function loadSuccess(){
+                var index=0;
+                var inow=0
+                for(var i=0;i<ROW;i++){
+                    for(var j = 0;j<COL;j++){
+                        index++;
+                        var oDiv=document.createElement("div");
+                        oDiv.style.backgroundImage="url(img/thumbs/"+index+".jpg)";
+                        oDiv.pas={
+                            row:i,
+                            col:j
+                        }
+                        oDiv.className="img";
+                        oDiv.innerHTML = "<span></span>";
+                        oContainer.appendChild(oDiv);
+                    }
+
+                }
+                var aDiv = oContainer.getElementsByTagName("div");
+                var bodyW=document.body.clientWidth;
+                var bodyH=document.body.clientHeight;
+                //计算行间距 列间距
+                var iColGap = (document.body.clientWidth-aDiv[0].offsetWidth*COL)/(COL+1);//clientWidth可视宽度
+                var iRowGap = (document.body.clientHeight-aDiv[0].offsetHeight*ROW)/(ROW+1);
+                var h=aDiv[0].offsetWidth;
+                var w=aDiv[0].offsetHeight;
+                var count=NUM;
+                timer=setInterval(function(){
+                    count--;
+                    aDiv[count].style.left=(iColGap + w) * aDiv[count].pas.col + iColGap+"px";
+                    aDiv[count].style.top=(iRowGap + h) * aDiv[count].pas.row + iRowGap+"px";
+                    aDiv[count].style.transform = "rotate(" + (Math.random() * 40 - 20) + "deg)";
+                    if(count==0){
+                        clearInterval(timer);
+                    }
+                },100);
+                var oPrev= document.getElementById('prev');
+                var oNext= document.getElementById('next');
+                var flag=0;
+                for(var i=0;i<NUM;i++){
+                    aDiv[i].index=i+1;
+                    aDiv[i].onclick=function(){
+                        clearInterval(timer);
+                        inow=this.index;
+                        if(!flag){
+                            for(var j=0;j<NUM;j++){
+                                aDiv[j].style.border='1px soild #fff';
+                                aDiv[j].style.transform="rotate(0)";
+                                aDiv[j].style.left=(bodyW-BigimgW)/2+(h-8)*aDiv[j].pas.col+"px";
+                                aDiv[j].style.top=(bodyH-BigimgH)/2+(w-8)*aDiv[j].pas.row+"px";
+                                for(var k=0;k<NUM;k++){
+                                    var oSpan=aDiv[k].getElementsByTagName('span')[0];
+                                    oSpan.style.backgroundImage="url(img/"+this.index+".jpg)";
+                                    var x= -125*aDiv[k].pas.col;
+                                    var y= -125*aDiv[k].pas.row;
+                                    oSpan.style.backgroundPosition= x+"px "+y+"px";
+                                    oSpan.style.opacity=1;
+                                }
+                                oPrev.style.backgroundImage="url(img/prev.png)";
+                                oNext.style.backgroundImage="url(img/next.png)";
+                            }
+                        }else{
+                            for(var s=0;s<NUM;s++){
+                                var oSpan=aDiv[s].getElementsByTagName('span')[0];
+                                oSpan.style.opacity=0;
+                                aDiv[s].style.left=(iColGap + w) * aDiv[s].pas.col + iColGap+"px";
+                                aDiv[s].style.top=(iRowGap + h) * aDiv[s].pas.row + iRowGap+"px";
+                                aDiv[s].style.transform = "rotate(" + (Math.random() * 40 - 20) + "deg)";
+                            }
+                            oPrev.style.backgroundImage="";
+                            oNext.style.backgroundImage="";
+                        }
+                        flag = !flag;
+                    }
+                }
+
+                oNext.onclick=function(){
+                    inow++;
+                    if(inow==NUM+1){
+                        inow=1;
+                    }
+                    change(inow);
+                }
+                oPrev.onclick=function(){
+                    inow--;
+                    if(inow==0){
+                        inow=NUM;
+                    }
+                    change(inow);
+                }
+
+
+                function change(e){
+                    for(var j=0;j<NUM;j++){
+                        aDiv[j].style.border='1px soild #fff';
+                        aDiv[j].style.transform="rotate(0)";
+                        aDiv[j].style.left=(bodyW-BigimgW)/2+(h-8)*aDiv[j].pas.col+"px";
+                        aDiv[j].style.top=(bodyH-BigimgH)/2+(w-8)*aDiv[j].pas.row+"px";
+                        for(var k=0;k<NUM;k++){
+                            var oSpan=aDiv[k].getElementsByTagName('span')[0];
+                            oSpan.style.backgroundImage="url(img/"+e+".jpg)";
+                            var x= -125*aDiv[k].pas.col;
+                            var y= -125*aDiv[k].pas.row;
+                            oSpan.style.backgroundPosition= x+"px "+y+"px";
+                            oSpan.style.transitionDelay=(Math.random()+0.5)+"s";
+                            oSpan.style.opacity=1;
+                        }
+                        oPrev.style.backgroundImage="url(img/prev.png)";
+                        oNext.style.backgroundImage="url(img/next.png)";
+                    }
+                }
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+                })();
+    </script>
+</body>
+</html>
